@@ -43,6 +43,24 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
 
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+        let sectionName: String
+        switch section {
+            case 0:
+                sectionName = "Name"
+            case 1:
+                sectionName = "Last Name"
+            default:
+                sectionName = "Nick Name"
+        }
+        return sectionName
+    }
+
 
 }
 
