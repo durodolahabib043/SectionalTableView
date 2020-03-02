@@ -13,16 +13,21 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
     @IBOutlet weak var tableView: UITableView!
 
     let cellId = "tableCellIndentifier"
+    let headerId = "headerCellId"
 
-    let name = ["Abidemi" , "Adebayo" , "olayide", "Abidemi" , "Adebayo" , "olayide"]
     let section = ["Name" , "Last Name" , "Nick Name"]
     var isAnimated = false
+
+    var ExpandableArray = [ExpandableCell(isExpanded: false , dataSourceInfo:["Abidemi" , "Adebayo" ,  "Adebayo" , "olayide"]),
+
+                           ExpandableCell(isExpanded: false , dataSourceInfo:["a" , "ada" , "asds", "DS" ])];
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: cellId)
+        tableView.register(UINib(nibName: "HeaderTableViewCell", bundle: nil), forCellReuseIdentifier: headerId)
         navigationItem.title = "Contact"
         if #available(iOS 11.0, *) {
             self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -30,7 +35,7 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
             // Fallback on earlier versions
         }
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Right", style: .plain, target: self, action: #selector(handleRightClick))
+        // navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Right", style: .plain, target: self, action: #selector(handleRightClick))
     }
 
     @objc func handleRightClick() {
@@ -39,54 +44,87 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
 
         for section in section.indices {
             //  IndexPath (row: row, section: 0)
-            for row in name.indices {
+            for row in ExpandableArray.indices {
                 indexPath.append(IndexPath(row: row, section: section))
             }
 
         }
-        if (!isAnimated) {
-                 tableView.reloadRows(at: indexPath, with: .right)
-            isAnimated = true
 
+        for isExpandedd in ExpandableArray {
+            if (isExpandedd.isExpanded) {
+                if (!isAnimated) {
+                    tableView.reloadRows(at: indexPath, with: .right)
+                    isAnimated = true
+                }
+                else {
+                    tableView.reloadRows(at: indexPath, with: .left)
+                    isAnimated = false
+                }
+            }
         }
-        else {
-               tableView.reloadRows(at: indexPath, with: .left)
-            isAnimated = false
 
-        }
 
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.name.count ;
+
+        if (ExpandableArray[section].isExpanded){
+            return 0
+        }
+        return self.ExpandableArray[section].dataSourceInfo.count ;
 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CustomTableViewCell
-
-        cell.nameLabel.text = name[indexPath.row]
+        cell.nameLabel.text = ExpandableArray[indexPath.section].dataSourceInfo[indexPath.row]
         return cell ;
 
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return ExpandableArray.count
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let button = UIButton(type: .system)
+        button.setTitle("Close", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .yellow
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 
-        let sectionName: String
-        switch section {
-        case 0:
-            sectionName = "Name"
-        case 1:
-            sectionName = "Last Name"
-        default:
-            sectionName = "Nick Name"
+        button.addTarget(self, action: #selector(handleOpenClose), for: .touchUpInside)
+
+        button.tag = section
+
+        return button
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45;
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
+    }
+
+    @objc func handleOpenClose (btn: UIButton) {
+        let section = btn.tag
+        var cellIndex = [IndexPath]()
+
+        for index in ExpandableArray[section].dataSourceInfo.indices {
+            cellIndex.append(IndexPath(row: index, section: section))
         }
-        return sectionName
+        //
+        let isExpanded = ExpandableArray[section].isExpanded // keep check of the expansion
+        ExpandableArray[section].isExpanded = !isExpanded
+        btn.setTitle(isExpanded ? "Open" : "Close", for: .normal)
+
+        if (isExpanded){
+            tableView.insertRows(at: cellIndex, with:  .fade);
+        }
+        else {
+            tableView.deleteRows(at: cellIndex, with: .fade)
+        }
+
     }
-
-
 }
 

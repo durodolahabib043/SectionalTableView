@@ -15,6 +15,9 @@
 		8217D988240C07A80033A184 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8217D987240C07A70033A184 /* SceneDelegate.swift */; };
 		8217D98C240C09E10033A184 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8217D98A240C09E10033A184 /* CustomTableViewCell.swift */; };
 		8217D98D240C09E10033A184 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8217D98B240C09E10033A184 /* CustomTableViewCell.xib */; };
+		825BA92B240C9507005CED49 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825BA929240C9507005CED49 /* HeaderTableViewCell.swift */; };
+		825BA92C240C9507005CED49 /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 825BA92A240C9507005CED49 /* HeaderTableViewCell.xib */; };
+		825BA92E240C9C2D005CED49 /* ExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825BA92D240C9C2D005CED49 /* ExpandableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		8217D987240C07A70033A184 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8217D98A240C09E10033A184 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		8217D98B240C09E10033A184 /* CustomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
+		825BA929240C9507005CED49 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
+		825BA92A240C9507005CED49 /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
+		825BA92D240C9C2D005CED49 /* ExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,7 @@
 				8217D95C240C01630033A184 /* Assets.xcassets */,
 				8217D95E240C01630033A184 /* LaunchScreen.storyboard */,
 				8217D961240C01630033A184 /* Info.plist */,
+				825BA92D240C9C2D005CED49 /* ExpandableCell.swift */,
 			);
 			path = SectionalContactTableview;
 			sourceTree = "<group>";
@@ -77,6 +84,8 @@
 			children = (
 				8217D98A240C09E10033A184 /* CustomTableViewCell.swift */,
 				8217D98B240C09E10033A184 /* CustomTableViewCell.xib */,
+				825BA929240C9507005CED49 /* HeaderTableViewCell.swift */,
+				825BA92A240C9507005CED49 /* HeaderTableViewCell.xib */,
 			);
 			path = customCell;
 			sourceTree = "<group>";
@@ -142,6 +151,7 @@
 				8217D960240C01630033A184 /* LaunchScreen.storyboard in Resources */,
 				8217D95D240C01630033A184 /* Assets.xcassets in Resources */,
 				8217D98D240C09E10033A184 /* CustomTableViewCell.xib in Resources */,
+				825BA92C240C9507005CED49 /* HeaderTableViewCell.xib in Resources */,
 				8217D95B240C015F0033A184 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,9 +164,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8217D958240C015F0033A184 /* ViewController.swift in Sources */,
+				825BA92B240C9507005CED49 /* HeaderTableViewCell.swift in Sources */,
 				8217D954240C015F0033A184 /* AppDelegate.swift in Sources */,
 				8217D98C240C09E10033A184 /* CustomTableViewCell.swift in Sources */,
 				8217D988240C07A80033A184 /* SceneDelegate.swift in Sources */,
+				825BA92E240C9C2D005CED49 /* ExpandableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
