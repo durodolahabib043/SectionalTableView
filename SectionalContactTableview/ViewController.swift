@@ -8,7 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataSource{
+class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataSource , CustomTableViewCellDelegate{
+    func selectedFavourite(cell : UITableViewCell) {
+        let selectedCell = tableView.indexPath(for: cell)
+        print("this is called  row \(selectedCell?.row)  sections \(selectedCell?.section)");
+    }
+
 
     @IBOutlet weak var tableView: UITableView!
 
@@ -76,6 +81,7 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CustomTableViewCell
+        cell.delegate = self
         cell.nameLabel.text = ExpandableArray[indexPath.section].dataSourceInfo[indexPath.row]
         return cell ;
 
