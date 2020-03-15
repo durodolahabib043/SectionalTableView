@@ -24,7 +24,7 @@ class CustomTableViewCell: UITableViewCell {
             starButton.setImage(image, for: [])
         }
         starButton.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
-        starButton.tintColor = .red
+       // starButton.tintColor = .red
         starButton.addTarget(self, action: #selector(handleClick), for: .touchUpInside)
         
         accessoryView = starButton

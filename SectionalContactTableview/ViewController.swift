@@ -9,10 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataSource , CustomTableViewCellDelegate{
-    func selectedFavourite(cell : UITableViewCell) {
-        let selectedCell = tableView.indexPath(for: cell)
-        print("this is called  row \(selectedCell?.row)  sections \(selectedCell?.section)");
-    }
+
 
 
     @IBOutlet weak var tableView: UITableView!
@@ -23,12 +20,24 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
     let section = ["Name" , "Last Name" , "Nick Name"]
     var isAnimated = false
 
-    var ExpandableArray = [ExpandableCell(isExpanded: false , dataSourceInfo:["Abidemi" , "Adebayo" ,  "Adebayo" , "olayide"]),
+    var ExpandableArray = [
 
-                           ExpandableCell(isExpanded: false , dataSourceInfo:["a" , "ada" , "asds", "DS" ])];
+        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: ["a" , "ada" , "asds", "DS" ])])
+        ,
+
+        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: ["Abidemi" , "Adebayo" ,  "Adebayo" , "olayide"])])
+
+
+    ]
+//
+
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // InnerDataSource(favourite: false, innerDataSource: <#T##[String]#>)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: cellId)
@@ -71,18 +80,16 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
 
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         if (ExpandableArray[section].isExpanded){
             return 0
         }
-        return self.ExpandableArray[section].dataSourceInfo.count ;
-
+        return self.ExpandableArray[section].dataSourceInfo[0].innerDataSource.count ;
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CustomTableViewCell
         cell.delegate = self
-        cell.nameLabel.text = ExpandableArray[indexPath.section].dataSourceInfo[indexPath.row]
+        cell.nameLabel.text = ExpandableArray[indexPath.section].dataSourceInfo[0].innerDataSource[indexPath.row]
         return cell ;
 
     }
@@ -116,7 +123,7 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
         let section = btn.tag
         var cellIndex = [IndexPath]()
 
-        for index in ExpandableArray[section].dataSourceInfo.indices {
+        for index in ExpandableArray.indices {
             cellIndex.append(IndexPath(row: index, section: section))
         }
         //
@@ -131,6 +138,16 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
             tableView.deleteRows(at: cellIndex, with: .fade)
         }
 
+    }
+    func selectedFavourite(cell : UITableViewCell) {
+        let selectedCell = tableView.indexPath(for: cell)
+        guard let row = selectedCell?.row else {
+            return
+        }
+        guard let section = selectedCell?.section else {
+            return
+        }
+        print("this is called  row  \(ExpandableArray[section].dataSourceInfo[0].innerDataSource[row])");
     }
 }
 

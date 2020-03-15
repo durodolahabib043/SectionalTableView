@@ -11,5 +11,10 @@ import Foundation
 
 struct ExpandableCell {
     var isExpanded : Bool 
-    let dataSourceInfo : [String]
+    let dataSourceInfo : [InnerDataSource]
+}
+
+struct InnerDataSource {
+    var favourite: Bool
+    let innerDataSource : [String]
 }
