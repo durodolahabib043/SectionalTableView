@@ -22,9 +22,29 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
 
     var ExpandableArray = [
 
-        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: [  "DS" ])]) // is maps to join
+        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: [  "DS" ]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "DS 2" ]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "DS 3" ])]) // is maps to join
         ,
-        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: [  "Make"]),InnerDataSource(favourite: false, innerDataSource: [  "Luck"]), InnerDataSource(favourite: false, innerDataSource: [  "ted"]),InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: [  "Make"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "Luck"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "ted"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
                                                            InnerDataSource(favourite: false, innerDataSource: [  "Normal"]),
                                                            InnerDataSource(favourite: false, innerDataSource: [  "Power"])])
     ]
@@ -105,7 +125,7 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
         button.backgroundColor = .yellow
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 
-        //  button.addTarget(self, action: #selector(handleOpenClose), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleOpenClose), for: .touchUpInside)
 
         button.tag = section
 
@@ -123,9 +143,16 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
         let section = btn.tag
         var cellIndex = [IndexPath]()
 
-        for index in ExpandableArray.indices {
+        for index in ExpandableArray[section].dataSourceInfo.indices {
             cellIndex.append(IndexPath(row: index, section: section))
+
+//            for innerIndex in index.dataSourceInfo.indices {
+//                cellIndex.append(IndexPath(row: innerIndex, section: section))
+//            }
+
         }
+
+
         //
         let isExpanded = ExpandableArray[section].isExpanded // keep check of the expansion
         ExpandableArray[section].isExpanded = !isExpanded
@@ -137,6 +164,8 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
         else {
             tableView.deleteRows(at: cellIndex, with: .fade)
         }
+
+        tableView.reloadData()
 
     }
     func selectedFavourite(cell : UITableViewCell) {
