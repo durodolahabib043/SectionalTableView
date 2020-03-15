@@ -15,19 +15,18 @@ protocol CustomTableViewCellDelegate {
 
 class CustomTableViewCell: UITableViewCell {
     var delegate: CustomTableViewCellDelegate? = nil
+
     
     @IBOutlet weak var nameLabel: UILabel!
-    override func awakeFromNib() {
+        override func awakeFromNib() {
         super.awakeFromNib()
         let starButton = UIButton(type: .system)
-        if let image = UIImage(named: "chevronDown") {
-            starButton.setImage(image, for: [])
-        }
+        starButton.setImage(#imageLiteral(resourceName: "fav_star"), for: .normal)
         starButton.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
-       // starButton.tintColor = .red
+        starButton.tintColor = .red
         starButton.addTarget(self, action: #selector(handleClick), for: .touchUpInside)
-        
         accessoryView = starButton
+
     }
     @objc func handleClick() {
         print("handleClick")

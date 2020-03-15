@@ -22,22 +22,16 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
 
     var ExpandableArray = [
 
-        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: ["a" , "ada" , "asds", "DS" ])])
+        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: [  "DS" ])]) // is maps to join
         ,
-
-        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: ["Abidemi" , "Adebayo" ,  "Adebayo" , "olayide"])])
-
-
+        ExpandableCell(isExpanded: false, dataSourceInfo: [InnerDataSource(favourite: false, innerDataSource: [  "Make"]),InnerDataSource(favourite: false, innerDataSource: [  "Luck"]), InnerDataSource(favourite: false, innerDataSource: [  "ted"]),InnerDataSource(favourite: false, innerDataSource: [  "phil"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "Normal"]),
+                                                           InnerDataSource(favourite: false, innerDataSource: [  "Power"])])
     ]
-//
-
-
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // InnerDataSource(favourite: false, innerDataSource: <#T##[String]#>)
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: cellId)
@@ -48,8 +42,6 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
         } else {
             // Fallback on earlier versions
         }
-
-        // navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Right", style: .plain, target: self, action: #selector(handleRightClick))
     }
 
     @objc func handleRightClick() {
@@ -83,13 +75,21 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
         if (ExpandableArray[section].isExpanded){
             return 0
         }
-        return self.ExpandableArray[section].dataSourceInfo[0].innerDataSource.count ;
+        return self.ExpandableArray[section].dataSourceInfo.count ;
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CustomTableViewCell
         cell.delegate = self
-        cell.nameLabel.text = ExpandableArray[indexPath.section].dataSourceInfo[0].innerDataSource[indexPath.row]
+        cell.nameLabel.text = ExpandableArray[indexPath.section].dataSourceInfo[indexPath.row].innerDataSource[0]
+
+        if (ExpandableArray[indexPath.section].dataSourceInfo[indexPath.row].favourite){
+            cell.accessoryView?.tintColor = UIColor.red
+        }
+        else {
+            cell.accessoryView?.tintColor =  UIColor.lightGray
+
+        }
         return cell ;
 
     }
@@ -105,7 +105,7 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
         button.backgroundColor = .yellow
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 
-        button.addTarget(self, action: #selector(handleOpenClose), for: .touchUpInside)
+        //  button.addTarget(self, action: #selector(handleOpenClose), for: .touchUpInside)
 
         button.tag = section
 
@@ -147,7 +147,16 @@ class ViewController: UIViewController  , UITableViewDelegate , UITableViewDataS
         guard let section = selectedCell?.section else {
             return
         }
-        print("this is called  row  \(ExpandableArray[section].dataSourceInfo[0].innerDataSource[row])");
+        let isFavourite = ExpandableArray[section].dataSourceInfo[row].favourite // check for favourite
+        ExpandableArray[section].dataSourceInfo[row].favourite = !isFavourite
+        if (isFavourite){
+            cell.accessoryView?.tintColor = .lightGray
+        }
+        else {
+            cell.accessoryView?.tintColor = .red
+        }
+
+        tableView.reloadRows(at: [selectedCell!], with: .fade)
     }
 }
 
